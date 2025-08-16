@@ -52,8 +52,12 @@ function App() {
     reset(); // 폼 초기화
   };
 
-  // 특정 알림 제거
+  // 특정 알림 제거 (목록에서 제거 + 예약 취소)
   const removeNotification = (index: number) => {
+    const notification = notifications[index];
+    // 예약된 알림도 함께 취소
+    clearNotification(notification.time);
+    // 목록에서 제거
     const updatedNotifications = notifications.filter((_, i) => i !== index);
     setNotifications(updatedNotifications);
   };
@@ -101,10 +105,7 @@ function App() {
                     {notification.time} - {notification.message}
                   </span>
                   <Button onClick={() => removeNotification(index)}>
-                    제거
-                  </Button>
-                  <Button onClick={() => clearNotification(notification.time)}>
-                    이 시간 알림 취소
+                    삭제
                   </Button>
                 </Stack>
               ))}
