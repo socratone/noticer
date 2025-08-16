@@ -14,7 +14,7 @@ type NotificationItem = {
  */
 const useScheduledNotification = () => {
   const timersRef = useRef<
-    Map<string, { timeout: number; interval: number | null }>
+    Map<string, { timeout: NodeJS.Timeout; interval: NodeJS.Timeout | null }>
   >(new Map());
 
   /**
@@ -101,8 +101,8 @@ const useScheduledNotification = () => {
 
           console.log(
             `알림이 예약되었습니다: "${message}" - ${time} (${Math.round(
-              initialDelay / 1000 / 60
-            )}분 후 첫 알림)`
+              initialDelay / 1000 / 60,
+            )}분 후 첫 알림)`,
           );
 
           // 첫 번째 알림 예약
@@ -110,9 +110,12 @@ const useScheduledNotification = () => {
             showNotification(message);
 
             // 24시간마다 반복하는 인터벌 설정
-            const interval = setInterval(() => {
-              showNotification(message);
-            }, 24 * 60 * 60 * 1000); // 24시간 = 86,400,000ms
+            const interval = setInterval(
+              () => {
+                showNotification(message);
+              },
+              24 * 60 * 60 * 1000,
+            ); // 24시간 = 86,400,000ms
 
             // 인터벌 ID 저장
             const existingTimer = timersRef.current.get(time);
@@ -128,7 +131,7 @@ const useScheduledNotification = () => {
         }
       });
     },
-    [clearAllNotifications]
+    [clearAllNotifications],
   );
 
   return {
