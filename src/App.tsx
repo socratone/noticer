@@ -95,7 +95,7 @@ function App() {
   };
 
   return (
-    <div style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+    <div style={{ width: '100%', maxWidth: '300px', margin: '0 auto' }}>
       <Stack direction="column" gap={16}>
         {/* 새로운 예약 알림 테스트 */}
         <Stack direction="column" gap={8}>
