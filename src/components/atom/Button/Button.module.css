@@ -7,6 +7,7 @@
   cursor: pointer;
   transition: border-color 0.25s;
   background-color: #f9f9f9;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
 .button:hover {
