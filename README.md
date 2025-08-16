@@ -1,6 +1,6 @@
 # Noticer
 
-React와 TypeScript로 개발된 Electron 기반 알림 애플리케이션입니다.
+사용자가 설정한 시간에 맞춰 데스크톱 알림을 보내주는 스케줄링 애플리케이션입니다. React와 TypeScript로 개발되었으며, Electron을 통해 크로스 플랫폼 데스크톱 앱으로 제공됩니다.
 
 ## 요구사항
 
