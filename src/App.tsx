@@ -17,7 +17,10 @@ const notificationSchema = z.object({
   time: z
     .string()
     .min(1, '시간을 입력해주세요.')
-    .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, '올바른 시간 형식(HH:mm)을 입력해주세요.'),
+    .regex(
+      /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/,
+      '올바른 시간 형식(HH:mm)을 입력해주세요.'
+    ),
 });
 
 // zod 스키마에서 타입 추출
@@ -62,10 +65,7 @@ function App() {
         <Stack direction="column" gap={8}>
           <form onSubmit={handleSubmit(addNotification)}>
             <Stack direction="column" gap={8}>
-              <TextField
-                placeholder="알림 메시지"
-                {...register('message')}
-              />
+              <TextField placeholder="알림 메시지" {...register('message')} />
               {errors.message && (
                 <span style={{ color: 'red' }}>{errors.message.message}</span>
               )}
