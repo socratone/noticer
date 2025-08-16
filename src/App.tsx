@@ -122,7 +122,13 @@ function App() {
             <Stack direction="column" gap={8}>
               <p>예약된 알림 목록:</p>
               {notifications.map((notification, index) => (
-                <Stack key={index} direction="row" gap={8} alignItems="center">
+                <Stack
+                  key={index}
+                  direction="row"
+                  gap={8}
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
                   <span>
                     {notification.time} - {notification.message}
                   </span>
