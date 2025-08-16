@@ -3,12 +3,11 @@ import Button from './components/atom/Button';
 import Stack from './components/atom/Stack';
 import TextField from './components/atom/TextField';
 import useScheduledNotification from './hooks/useScheduledNotification';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-// zod 스키마 정의
 const notificationSchema = z.object({
   message: z
     .string()
@@ -23,14 +22,12 @@ const notificationSchema = z.object({
     ),
 });
 
-// zod 스키마에서 타입 추출
 type NotificationFormData = z.infer<typeof notificationSchema>;
 
 function App() {
   const { scheduleNotifications, clearNotification, clearAllNotifications } =
     useScheduledNotification();
 
-  // react-hook-form 설정 - zod resolver 사용
   const {
     register,
     handleSubmit,
@@ -40,16 +37,45 @@ function App() {
     resolver: zodResolver(notificationSchema),
   });
 
+  // localStorage에서 저장된 알림 목록을 불러오는 함수
+  const loadNotificationsFromStorage = (): {
+    message: string;
+    time: string;
+  }[] => {
+    try {
+      const saved = localStorage.getItem('notifications');
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error('알림 목록을 불러오는 중 오류가 발생했습니다:', error);
+      return [];
+    }
+  };
+
+  // localStorage에 알림 목록을 저장하는 함수
+  const saveNotificationsToStorage = (
+    notifications: { message: string; time: string }[]
+  ) => {
+    try {
+      localStorage.setItem('notifications', JSON.stringify(notifications));
+    } catch (error) {
+      console.error('알림 목록을 저장하는 중 오류가 발생했습니다:', error);
+    }
+  };
+
   const [notifications, setNotifications] = useState<
     { message: string; time: string }[]
-  >([]);
+  >(loadNotificationsFromStorage);
 
-  // 알림 목록에 추가 - react-hook-form 사용
+  // notifications 상태가 변경될 때마다 localStorage에 저장
+  useEffect(() => {
+    saveNotificationsToStorage(notifications);
+  }, [notifications]);
+
   const addNotification = (data: NotificationFormData) => {
     const newNotification = { message: data.message, time: data.time };
     const updatedNotifications = [...notifications, newNotification];
     setNotifications(updatedNotifications);
-    reset(); // 폼 초기화
+    reset();
   };
 
   // 특정 알림 제거 (목록에서 제거 + 예약 취소)
