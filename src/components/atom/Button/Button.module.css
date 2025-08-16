@@ -10,7 +10,7 @@
 }
 
 .button:hover {
-  border-color: dodgerblue;
+  border-color: gray;
 }
 
 .button:focus,
