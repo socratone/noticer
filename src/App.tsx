@@ -120,7 +120,9 @@ function App() {
           {/* 알림 목록 표시 */}
           {notifications.length > 0 && (
             <Stack direction="column" gap={8}>
-              <p>예약된 알림 목록:</p>
+              <p>
+                <strong>예약된 알림 목록:</strong>
+              </p>
               {notifications.map((notification, index) => (
                 <Stack
                   key={index}
