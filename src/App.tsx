@@ -103,12 +103,14 @@ function App() {
             <Stack direction="column" gap={8}>
               <TextField placeholder="알림 메시지" {...register('message')} />
               {errors.message && (
-                <span style={{ color: 'red' }}>{errors.message.message}</span>
+                <span style={{ color: 'tomato' }}>
+                  {errors.message.message}
+                </span>
               )}
 
               <TextField placeholder="14:30" {...register('time')} />
               {errors.time && (
-                <span style={{ color: 'red' }}>{errors.time.message}</span>
+                <span style={{ color: 'tomato' }}>{errors.time.message}</span>
               )}
 
               <Button type="submit">알림 추가</Button>
@@ -120,7 +122,7 @@ function App() {
             <Stack direction="column" gap={4}>
               <p>예약된 알림 목록:</p>
               {notifications.map((notification, index) => (
-                <Stack key={index} direction="row" gap={8}>
+                <Stack key={index} direction="row" gap={8} alignItems="center">
                   <span>
                     {notification.time} - {notification.message}
                   </span>
