@@ -25,8 +25,7 @@ const notificationSchema = z.object({
 type NotificationFormData = z.infer<typeof notificationSchema>;
 
 function App() {
-  const { scheduleNotifications, clearNotification, clearAllNotifications } =
-    useScheduledNotification();
+  const { scheduleNotifications } = useScheduledNotification();
 
   const {
     register,
@@ -75,17 +74,16 @@ function App() {
     const newNotification = { message: data.message, time: data.time };
     const updatedNotifications = [...notifications, newNotification];
     setNotifications(updatedNotifications);
+    // 새로운 알림 목록으로 자동 예약
+    scheduleNotifications(updatedNotifications);
     reset();
   };
 
-  // 특정 알림 제거 (목록에서 제거 + 예약 취소)
+  // 특정 알림 제거 (목록에서 제거 + 전체 스케줄 재설정)
   const removeNotification = (index: number) => {
-    const notification = notifications[index];
-    // 예약된 알림도 함께 취소
-    clearNotification(notification.time);
-    // 목록에서 제거
     const updatedNotifications = notifications.filter((_, i) => i !== index);
     setNotifications(updatedNotifications);
+    scheduleNotifications(updatedNotifications);
   };
 
   return (
@@ -111,15 +109,6 @@ function App() {
               <Button type="submit">알림 추가</Button>
             </Stack>
           </form>
-
-          <hr style={{ width: '100%' }} />
-          <Stack direction="row" gap={8}>
-            <Button onClick={() => scheduleNotifications(notifications)}>
-              모든 알림 예약
-            </Button>
-            <Button onClick={clearAllNotifications}>모든 알림 취소</Button>
-          </Stack>
-          <hr style={{ width: '100%' }} />
 
           {/* 알림 목록 표시 */}
           {notifications.length > 0 && (

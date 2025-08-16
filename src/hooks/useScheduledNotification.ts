@@ -77,21 +77,6 @@ const useScheduledNotification = () => {
   }, []);
 
   /**
-   * 특정 시간의 알림을 취소
-   */
-  const clearNotification = useCallback((time: string) => {
-    const timer = timersRef.current.get(time);
-    if (timer) {
-      clearTimeout(timer.timeout);
-      if (timer.interval) {
-        clearInterval(timer.interval);
-      }
-      timersRef.current.delete(time);
-      console.log(`${time} 알림이 취소되었습니다.`);
-    }
-  }, []);
-
-  /**
    * 여러 시간에 매일 반복되는 알림들을 예약
    * @param notifications - 알림 설정 배열
    */
@@ -148,8 +133,6 @@ const useScheduledNotification = () => {
 
   return {
     scheduleNotifications,
-    clearNotification,
-    clearAllNotifications,
   };
 };
 
