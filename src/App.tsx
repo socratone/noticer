@@ -70,6 +70,14 @@ function App() {
     saveNotificationsToStorage(notifications);
   }, [notifications]);
 
+  // 앱 시작 시 저장된 알림들을 예약
+  useEffect(() => {
+    const savedNotifications = loadNotificationsFromStorage();
+    if (savedNotifications.length > 0) {
+      scheduleNotifications(savedNotifications);
+    }
+  }, [scheduleNotifications]);
+
   const addNotification = (data: NotificationFormData) => {
     const newNotification = { message: data.message, time: data.time };
     const updatedNotifications = [...notifications, newNotification];
