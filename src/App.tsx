@@ -18,7 +18,7 @@ const notificationSchema = z.object({
     .min(1, '시간을 입력해주세요.')
     .regex(
       /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/,
-      '올바른 시간 형식(HH:mm)을 입력해주세요.'
+      '올바른 시간 형식(HH:mm)을 입력해주세요.',
     ),
 });
 
@@ -52,7 +52,7 @@ function App() {
 
   // localStorage에 알림 목록을 저장하는 함수
   const saveNotificationsToStorage = (
-    notifications: { message: string; time: string }[]
+    notifications: { message: string; time: string }[],
   ) => {
     try {
       localStorage.setItem('notifications', JSON.stringify(notifications));
@@ -113,7 +113,7 @@ function App() {
                 <span style={{ color: 'tomato' }}>{errors.time.message}</span>
               )}
 
-              <Button type="submit">알림 추가</Button>
+              <Button type="submit">⏰ 알림 추가</Button>
             </Stack>
           </form>
 
@@ -132,8 +132,8 @@ function App() {
                   <span>
                     {notification.time} - {notification.message}
                   </span>
-                  <Button onClick={() => removeNotification(index)}>
-                    삭제
+                  <Button compact onClick={() => removeNotification(index)}>
+                    🗑️ 삭제
                   </Button>
                 </Stack>
               ))}
