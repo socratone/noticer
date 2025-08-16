@@ -106,10 +106,7 @@ function App() {
                 <span style={{ color: 'red' }}>{errors.message.message}</span>
               )}
 
-              <TextField
-                placeholder="시간 (HH:mm 형식, 예: 14:30)"
-                {...register('time')}
-              />
+              <TextField placeholder="14:30" {...register('time')} />
               {errors.time && (
                 <span style={{ color: 'red' }}>{errors.time.message}</span>
               )}
